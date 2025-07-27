@@ -30,7 +30,7 @@ public class UserDAOImp implements UserDAO {
         ps.setString(1,email);
         ResultSet rs = ps.executeQuery();
         if(rs.next()){
-            mapUser(rs);
+            return mapUser(rs);
 
         }
         }catch(Exception e){
@@ -46,7 +46,7 @@ public class UserDAOImp implements UserDAO {
             preparedStatement.setInt(1,userId);
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()){
-                mapUser(rs);
+                return mapUser(rs);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -68,9 +68,14 @@ public class UserDAOImp implements UserDAO {
         return false;
     }
     private User mapUser(ResultSet rs) throws SQLException {
-        return new User(rs.getInt("user_id"),rs.getString("email"),
-                rs.getString("phone"),rs.getString("first_name"),rs.getString("last_name"),
-                KycStatus.valueOf(rs.getString("kyc_status")), rs.getTimestamp("kyc_verified_at").toLocalDateTime(),
-                rs.getTimestamp("created_at").toLocalDateTime(),rs.getTimestamp("updated_at").toLocalDateTime());
+        return new User(rs.getInt("user_id"),
+                rs.getString("email"),
+                rs.getString("phone"),
+                rs.getString("first_name"),
+                rs.getString("last_name"),
+                KycStatus.valueOf(rs.getString("kyc_status")),
+                rs.getTimestamp("kyc_verified_at") != null?rs.getTimestamp("kyc_verified_at").toLocalDateTime(): null,
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime());
     }
 }

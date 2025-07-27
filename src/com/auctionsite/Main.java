@@ -1,5 +1,6 @@
 package com.auctionsite;
 import com.auctionsite.customExceptions.InvalidUserException;
+import com.auctionsite.customExceptions.UserNotFoundException;
 import com.auctionsite.dao.UserDAO;
 import com.auctionsite.dao.UserDAOImp;
 import com.auctionsite.service.UserService;
@@ -20,9 +21,11 @@ public class Main {
         User user = new User("abc@gmail.com","9091112307","Akshansh","Sinha");
 
         try {
-            userService.registerUser(user);
-        } catch (InvalidUserException e) {
+//            userService.registerUser(user);
+            userService.login("abc@gmail.com");
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
 }

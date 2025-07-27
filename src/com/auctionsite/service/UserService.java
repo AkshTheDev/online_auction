@@ -1,4 +1,5 @@
 package com.auctionsite.service;
+import com.auctionsite.customExceptions.UserNotFoundException;
 import com.auctionsite.dao.UserDAOImp;
 import com.auctionsite.model.User;
 import com.auctionsite.customExceptions.InvalidUserException;
@@ -29,9 +30,20 @@ public class UserService {
         userDAO.saveUser(user);
     }
 
-//
-//    public void Login(User user) {
-//
-//    }
+
+    public void login(String email) throws InvalidUserException, UserNotFoundException {
+        if (email == null || email.isBlank()) {
+            throw new InvalidUserException("Email is required for login");
+        }
+
+        if (!email.matches("^[\\w.-]+@[\\w.-]+\\.\\w+$")) {
+            throw new InvalidUserException("Invalid email format");
+        }
+        User user = userDAO.getUserByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException("User not found");
+        }
+        System.out.println("login success for "+email);
+    }
 
 }

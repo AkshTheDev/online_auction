@@ -16,7 +16,7 @@ public class ItemDAOImp implements ItemDAO {
 
     @Override
     public void saveItem(Item item) {
-        String query = "INSERT INTO items (seller_id, name, description, start_price, reserve_price, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO items (seller_id, item_name, description, start_price, reserve_price, created_at) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, item.getSellerId());
             ps.setString(2, item.getItemName());
