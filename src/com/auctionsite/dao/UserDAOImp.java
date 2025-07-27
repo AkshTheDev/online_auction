@@ -9,18 +9,15 @@ import com.auctionsite.utils.KycStatus;
 public class UserDAOImp implements UserDAO {
     private final Connection con = CreateConnection.getConnection();
 
-    public void RegisterUser(User user) {
-        try{
-        PreparedStatement ps = con.prepareStatement("INSERT INTO users (email, phone, first_name, last_name) VALUES(?,?,?,?)");
-        ps.setString(1,user.getEmail());
-        ps.setString(2,user.getPhone());
-        ps.setString(3,user.getFirst_name());
-        ps.setString(4,user.getLast_name());
-        ps.executeUpdate();
-        System.out.println();
-        ps.close();
-
-
+    public void saveUser(User user) {
+        String query = "INSERT INTO users (email, phone, first_name, last_name) VALUES(?,?,?,?)";
+        try(PreparedStatement ps = con.prepareStatement(query)){
+            ps.setString(1,user.getEmail());
+            ps.setString(2,user.getPhone());
+            ps.setString(3,user.getFirst_name());
+            ps.setString(4,user.getLast_name());
+            ps.executeUpdate();
+            System.out.println("User saved");
         }catch(Exception e){
             e.printStackTrace();
         }
